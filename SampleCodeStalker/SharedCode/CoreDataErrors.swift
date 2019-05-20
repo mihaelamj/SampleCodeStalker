@@ -54,7 +54,7 @@ extension NSManagedObject {
             NSLocalizedDescriptionKey as NSObject: localizedDescription as AnyObject
         ]
         let domain = Bundle(for: type(of: self)).bundleIdentifier ?? "undefined"
-        return NSError(domain: domain, code: NSManagedObjectValidationError, userInfo: userInfo as! [String : Any])
+        return NSError(domain: domain, code: NSManagedObjectValidationError, userInfo: userInfo as? [String : Any])
     }
     
     func validationErrorWithDescription(_ localizedDescription: String) -> NSError {
@@ -63,7 +63,7 @@ extension NSManagedObject {
             NSLocalizedDescriptionKey as NSObject: localizedDescription as AnyObject
         ]
         let domain = Bundle(for: type(of: self)).bundleIdentifier ?? "undefined"
-        return NSError(domain: domain, code: NSManagedObjectValidationError, userInfo: userInfo as! [String : Any])
+        return NSError(domain: domain, code: NSManagedObjectValidationError, userInfo: userInfo as? [String : Any])
     }
     
     func multipleValidationErrorWithDescriptions(_ localizedDescriptions: [String]) -> NSError {
@@ -71,6 +71,6 @@ extension NSManagedObject {
             NSDetailedErrorsKey as NSObject: localizedDescriptions.map(validationErrorWithDescription) as AnyObject
         ]
         let domain = Bundle(for: type(of: self)).bundleIdentifier ?? "undefined"
-        return NSError(domain: domain, code: NSValidationMultipleErrorsError, userInfo: userInfo as! [String : Any])
+        return NSError(domain: domain, code: NSValidationMultipleErrorsError, userInfo: userInfo as? [String : Any])
     }
 }

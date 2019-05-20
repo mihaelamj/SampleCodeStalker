@@ -140,7 +140,12 @@ struct DocumentParser {
                     , type == Int(sampleCodeType)
                     else { return }
                 
-                let cleanedURLString = urlString.hasPrefix("../") ? urlString.substring(from: urlString.characters.index(urlString.startIndex, offsetBy: 3)): urlString
+                var cleanedURLString = urlString
+                if urlString.hasPrefix("../") {
+                    let startIndex = urlString.index(urlString.startIndex, offsetBy: 3)
+                    cleanedURLString = String(urlString[startIndex ..< urlString.endIndex])
+                }
+                
                 let url = URL(string: AppleDocumentsAPI.rootURLString + "prerelease/content/" + cleanedURLString)!
                 
                 CDDocument.updateOrInsertIntoContext(self.moc,
