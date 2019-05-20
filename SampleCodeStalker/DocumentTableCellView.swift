@@ -62,26 +62,26 @@ class DocumentTableCellView: NSTableCellView {
         dateTextField.stringValue = DocumentTableCellView.dateFormatter.string(from: document.date as Date)
         
         if let topicName = document.topic?.name , topicName != "" {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityMustHold, for: topicTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.mustHold, for: topicTextField)
             topicTextField.stringValue = topicName
         } else {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityNotVisible, for: topicTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.notVisible, for: topicTextField)
             topicTextField.stringValue = ""
         }
         
         if let subTopicName = document.subTopic?.name , subTopicName != "" {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityMustHold, for: subTopicTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.mustHold, for: subTopicTextField)
             subTopicTextField.stringValue = subTopicName
         } else {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityNotVisible, for: subTopicTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.notVisible, for: subTopicTextField)
             subTopicTextField.stringValue = ""
         }
         
         if let frameworkName = document.framework?.name , frameworkName != "" {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityMustHold, for: frameworkTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.mustHold, for: frameworkTextField)
             frameworkTextField.stringValue = frameworkName
         } else {
-            tagStackView.setVisibilityPriority(NSStackViewVisibilityPriorityNotVisible, for: frameworkTextField)
+            tagStackView.setVisibilityPriority(NSStackView.VisibilityPriority.notVisible, for: frameworkTextField)
             frameworkTextField.stringValue = ""
         }
         
@@ -92,7 +92,7 @@ class DocumentTableCellView: NSTableCellView {
     
     @IBAction func downloadButtonPressed(_ sender: DownloadButton) {
         guard let document = document else { return }
-        NSWorkspace.shared().open(document.url as URL)
+        NSWorkspace.shared.open(document.url as URL)
     }
 }
 

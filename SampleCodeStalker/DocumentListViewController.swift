@@ -80,7 +80,7 @@ extension DocumentListViewController: NSTableViewDelegate {
 // MARK: - NSSearchFieldDelegate
 extension DocumentListViewController: NSSearchFieldDelegate {
     
-    override func controlTextDidChange(_ obj: Notification) {
+    func controlTextDidChange(_ obj: Notification) {
         guard let textField = obj.object as? NSTextField else { return }
         dataSource.filterWithString(textField.stringValue.lowercased())
     }

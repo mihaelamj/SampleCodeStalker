@@ -43,26 +43,26 @@ class DownloadButton: NSButton {
             bezierPath.close()
             bezierPath.move(to: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.50000 * bounds.height))
             bezierPath.curve(to: NSPoint(x: bounds.minX + 0.50000 * bounds.width, y: bounds.minY + 0.97368 * bounds.height),
-                controlPoint1: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.76161 * bounds.height),
-                controlPoint2: NSPoint(x: bounds.minX + 0.76161 * bounds.width, y: bounds.minY + 0.97368 * bounds.height))
+                             controlPoint1: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.76161 * bounds.height),
+                             controlPoint2: NSPoint(x: bounds.minX + 0.76161 * bounds.width, y: bounds.minY + 0.97368 * bounds.height))
             bezierPath.curve(to: NSPoint(x: bounds.minX + 0.02632 * bounds.width, y: bounds.minY + 0.50000 * bounds.height),
-                controlPoint1: NSPoint(x: bounds.minX + 0.23839 * bounds.width, y: bounds.minY + 0.97368 * bounds.height),
-                controlPoint2: NSPoint(x: bounds.minX + 0.02632 * bounds.width, y: bounds.minY + 0.76161 * bounds.height))
+                             controlPoint1: NSPoint(x: bounds.minX + 0.23839 * bounds.width, y: bounds.minY + 0.97368 * bounds.height),
+                             controlPoint2: NSPoint(x: bounds.minX + 0.02632 * bounds.width, y: bounds.minY + 0.76161 * bounds.height))
             bezierPath.curve(to: NSPoint(x: bounds.minX + 0.21382 * bounds.width, y: bounds.minY + 0.12250 * bounds.height),
-                controlPoint1: NSPoint(x: bounds.minX + 0.02632 * bounds.width, y: bounds.minY + 0.34591 * bounds.height),
-                controlPoint2: NSPoint(x: bounds.minX + 0.09989 * bounds.width, y: bounds.minY + 0.20901 * bounds.height))
+                             controlPoint1: NSPoint(x: bounds.minX + 0.02632 * bounds.width, y: bounds.minY + 0.34591 * bounds.height),
+                             controlPoint2: NSPoint(x: bounds.minX + 0.09989 * bounds.width, y: bounds.minY + 0.20901 * bounds.height))
             bezierPath.curve(to: NSPoint(x: bounds.minX + 0.50000 * bounds.width, y: bounds.minY + 0.02632 * bounds.height),
-                controlPoint1: NSPoint(x: bounds.minX + 0.29333 * bounds.width, y: bounds.minY + 0.06214 * bounds.height),
-                controlPoint2: NSPoint(x: bounds.minX + 0.39248 * bounds.width, y: bounds.minY + 0.02632 * bounds.height))
+                             controlPoint1: NSPoint(x: bounds.minX + 0.29333 * bounds.width, y: bounds.minY + 0.06214 * bounds.height),
+                             controlPoint2: NSPoint(x: bounds.minX + 0.39248 * bounds.width, y: bounds.minY + 0.02632 * bounds.height))
             bezierPath.curve(to: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.50000 * bounds.height),
-                controlPoint1: NSPoint(x: bounds.minX + 0.76161 * bounds.width, y: bounds.minY + 0.02632 * bounds.height),
-                controlPoint2: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.23839 * bounds.height))
+                             controlPoint1: NSPoint(x: bounds.minX + 0.76161 * bounds.width, y: bounds.minY + 0.02632 * bounds.height),
+                             controlPoint2: NSPoint(x: bounds.minX + 0.97368 * bounds.width, y: bounds.minY + 0.23839 * bounds.height))
             bezierPath.close()
             shapeLayer.path = bezierPath.cgPath()
         }
     }
     
-    fileprivate var trackingTag: NSTrackingRectTag?
+    fileprivate var trackingTag: NSView.TrackingRectTag?
     
     override var frame: NSRect {
         get { return super.frame }
@@ -137,9 +137,9 @@ class DownloadButton: NSButton {
         CATransaction.setAnimationDuration(kAnimationDuration)
         
         switch (isMousedOver, isActive) {
-            case (true, true): shapeLayer.fillColor = Colors.Active
-            case (true, false): shapeLayer.fillColor = Colors.Tint
-            default: shapeLayer.fillColor = Colors.DarkTint
+        case (true, true): shapeLayer.fillColor = Colors.Active
+        case (true, false): shapeLayer.fillColor = Colors.Tint
+        default: shapeLayer.fillColor = Colors.DarkTint
         }
         
         rootLayer.opacity = isEnabled ? kEnabledOpacity: kDisabledOpacity
@@ -186,7 +186,7 @@ class DownloadButton: NSButton {
 
 // MARK: - extension NSBezierPath
 extension NSBezierPath {
-
+    
     func cgPath() -> CGPath {
         
         let path = CGMutablePath()
@@ -195,14 +195,14 @@ extension NSBezierPath {
         for index in 0..<self.elementCount {
             let pathType = self.element(at: index, associatedPoints: points)
             switch pathType {
-                case .moveToBezierPathElement: path.move(to: points[0])
-                case .lineToBezierPathElement: path.addLine(to: points[0])
-                case .curveToBezierPathElement: path.addCurve(to: points[2], control1: points[0], control2: points[1])
-                case .closePathBezierPathElement: path.closeSubpath()
+            case .moveTo: path.move(to: points[0])
+            case .lineTo: path.addLine(to: points[0])
+            case .curveTo: path.addCurve(to: points[2], control1: points[0], control2: points[1])
+            case .closePath: path.closeSubpath()
             }
         }
-
-        points.deallocate(capacity: 3)
+        
+        points.deallocate()
         return path
     }
 }

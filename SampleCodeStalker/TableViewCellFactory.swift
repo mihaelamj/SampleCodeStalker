@@ -24,7 +24,7 @@ class TableViewCellFactory<Cell: NSTableCellView, Item: ReuseIdentifierCreatable
     }
     
     func cellForItem(_ item: Item, forColumn column: NSTableColumn, inTableView tableView: NSTableView) -> Cell {
-        let cell = tableView.make(withIdentifier: item.cellReuseIdentifier, owner: self) as! Cell
+        let cell = tableView.makeView(withIdentifier: convertToNSUserInterfaceItemIdentifier(item.cellReuseIdentifier), owner: self) as! Cell
         cellConfigurator(cell, item)
         return cell
     }
@@ -33,4 +33,9 @@ class TableViewCellFactory<Cell: NSTableCellView, Item: ReuseIdentifierCreatable
 
 protocol ReuseIdentifierCreatable {
     var cellReuseIdentifier: String { get }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSUserInterfaceItemIdentifier(_ input: String) -> NSUserInterfaceItemIdentifier {
+	return NSUserInterfaceItemIdentifier(rawValue: input)
 }
