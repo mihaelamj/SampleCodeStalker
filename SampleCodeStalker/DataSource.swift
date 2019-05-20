@@ -34,7 +34,7 @@ final class DataSource<Delegate: DataSourceDelegate>: DataSourceType where Deleg
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(contextSavedToken)
+        NotificationCenter.default.removeObserver(contextSavedToken!)
     }
         
     // To keep the filter string when reloading the data
